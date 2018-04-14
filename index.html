@@ -19,20 +19,22 @@
 <body>
     <div id="map"></div>
     <div id="obj"></div>
+    <p id="demo"></p>
+    <p id="dema"></p>
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
     <script>
 //        console.log("Fuck off")
-        function initMap(){
-            var location = {lat: 29.928543, lng:30.918783};
-            var map = new google.maps.Map(document.getElementById("map"),{
-                zoom:4,
-                center: location
-            });
-            var marker = new google.maps.Marker({
-                position:location,
-                map: map
-            });
-        }
+//        function initMap(){
+//            var location = {lat: 29.928543, lng:30.918783};
+//            var map = new google.maps.Map(document.getElementById("map"),{
+//                zoom:4,
+//                center: location
+//            });
+//            var marker = new google.maps.Marker({
+//                position:location,
+//                map: map
+//            });
+//        }
 
         // Initialize Firebase
         var config = {
@@ -48,8 +50,35 @@
         const dbRefObj = firebase.database().ref('lat');
         // sync object changes
         dbRefObj.on('value', function(snapshot){
-            console.log("snapshot:"+snapshot.val());
+            let LM = snapshot.val();
+            console.log(LM);
+            
+            
+    var str = LM ;
+    var res = str.split(" ");
+    var x = res[1].split(":");
+    var lat = x[1];
+    var x = res[0].split(":");
+    var lang = x[1];
+    var latt = parseFloat(lat)
+    var langg = parseFloat(lang)
+    document.getElementById("demo").innerHTML = latt
+    document.getElementById("dema").innerHTML = langg
+    
+    var location = {lat: langg, lng:latt};
+            var map = new google.maps.Map(document.getElementById("map"),{
+                zoom:15,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position:location,
+                map: map
+            });
         });
+        function myFunction() {
+   
+    
+}
 
     </script>
     <!-- key : AIzaSyAWDFMpb8nHgus12ByxlJZE0n_-fXxVm4E -->
