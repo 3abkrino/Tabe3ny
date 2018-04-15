@@ -11,7 +11,7 @@
             padding: 0;
         }
         #map{
-            height: 500px;
+            height: 350px;
             width: 100%;
         }
     </style>
@@ -21,6 +21,7 @@
     <div id="obj"></div>
     <p id="demo"></p>
     <p id="dema"></p>
+    <p id="time"></p>
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
     <script>
 //        console.log("Fuck off")
@@ -35,37 +36,44 @@
 //                map: map
 //            });
 //        }
-
         // Initialize Firebase
-        var config = {
-    apiKey: "AIzaSyAaBKmbGTO-Y16oIxbuuL3MAKBkMuzrZyw",
-    authDomain: "myapplication7-6b4ad.firebaseapp.com",
-    databaseURL: "https://myapplication7-6b4ad.firebaseio.com",
-    projectId: "myapplication7-6b4ad",
-    storageBucket: "myapplication7-6b4ad.appspot.com",
-    messagingSenderId: "567195602536"
-                    };
+        var config = 
+            {
+            apiKey: "AIzaSyAaBKmbGTO-Y16oIxbuuL3MAKBkMuzrZyw",
+            authDomain: "myapplication7-6b4ad.firebaseapp.com",
+            databaseURL: "https://myapplication7-6b4ad.firebaseio.com",
+            projectId: "myapplication7-6b4ad",
+            storageBucket: "myapplication7-6b4ad.appspot.com",
+            messagingSenderId: "567195602536"
+            };
         firebase.initializeApp(config);
+        
         // Create references
         const dbRefObj = firebase.database().ref('lat');
-        // sync object changes
+        
+        // imoprt database of firebase 
         dbRefObj.on('value', function(snapshot){
             let LM = snapshot.val();
             console.log(LM);
             
+        // split the variable of database to two variables     
+        var str = LM ;
+        var res = str.split(" ");
+        var x = res[1].split(":");
+        var lat = x[1];
+        var x = res[0].split(":");
+        var lang = x[1];
+        var latt = parseFloat(lat);
+        var langg = parseFloat(lang);
+        // Date 
+        var T = new Date();
+        console.log(T);
+        document.getElementById("demo").innerHTML = latt;
+        document.getElementById("dema").innerHTML = langg;
+        document.getElementById("time").innerHTML = T;
             
-    var str = LM ;
-    var res = str.split(" ");
-    var x = res[1].split(":");
-    var lat = x[1];
-    var x = res[0].split(":");
-    var lang = x[1];
-    var latt = parseFloat(lat)
-    var langg = parseFloat(lang)
-    document.getElementById("demo").innerHTML = latt
-    document.getElementById("dema").innerHTML = langg
-    
-    var location = {lat: langg, lng:latt};
+        // Googla maps API
+        var location = {lat: langg, lng:latt};
             var map = new google.maps.Map(document.getElementById("map"),{
                 zoom:15,
                 center: location
@@ -74,13 +82,9 @@
                 position:location,
                 map: map
             });
+            
         });
-        function myFunction() {
-   
-    
-}
-
-    </script>
+      </script>
     <!-- key : AIzaSyAWDFMpb8nHgus12ByxlJZE0n_-fXxVm4E -->
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWDFMpb8nHgus12ByxlJZE0n_-fXxVm4E&callback=initMap"async defer></script>
