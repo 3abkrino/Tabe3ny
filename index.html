@@ -50,11 +50,14 @@
         
         // Create references
         const dbRefObj = firebase.database().ref('lat');
+        const dbRefObject = firebase.database().ref('time');
         
         // imoprt database of firebase 
         dbRefObj.on('value', function(snapshot){
             let LM = snapshot.val();
+        
             console.log(LM);
+            
             
         // split the variable of database to two variables     
         var str = LM ;
@@ -70,7 +73,7 @@
         console.log(T);
         document.getElementById("demo").innerHTML = latt;
         document.getElementById("dema").innerHTML = langg;
-        document.getElementById("time").innerHTML = T;
+        //document.getElementById("time").innerHTML =  T ;
             
         // Googla maps API
         var location = {lat: langg, lng:latt};
@@ -84,6 +87,19 @@
             });
             
         });
+        dbRefObject.on('value', function(snapshot) {
+            let LLM = snapshot.val()
+            console.log(LLM);
+            var strr = LLM ;
+            var ress = strr.split(":");
+           
+           let a = []
+           a.push(ress[1])
+           a.push(ress[2])
+           a.push(ress[3])
+
+            document.getElementById("time").innerHTML = "The Time is " + a.join(" : ") ;
+    });
       </script>
     <!-- key : AIzaSyAWDFMpb8nHgus12ByxlJZE0n_-fXxVm4E -->
     <!-- Google Maps API -->
